@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.6.2",
+    "playwright": "^1.55.1"
+  },
+  "scripts": {
+    "test:chrome": "playwright test --headed --project=chromium",
+    "test:firefox": "playwright test --headed --project=firefox",
+    "test:all": "playwright test --headed --project=chromium --project=firefox"
+  }
+}
