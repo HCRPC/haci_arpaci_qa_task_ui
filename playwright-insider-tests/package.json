@@ -7,6 +7,8 @@
   "scripts": {
     "test:chrome": "playwright test --headed --project=chromium",
     "test:firefox": "playwright test --headed --project=firefox",
-    "test:all": "playwright test --headed --project=chromium --project=firefox"
+    "test:allUi": "playwright test --headed --project=chromium --project=firefox",
+    "test:api": "playwright test tests/api",
+    "test:all": "playwright test"
   }
 }
