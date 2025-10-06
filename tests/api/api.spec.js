@@ -16,6 +16,7 @@ test.describe('PetStore API - CRUD for /pet endpoint', () => {
             extraHTTPHeaders: { 'Content-Type': 'application/json' }
         });
         petApi = new PetApi(request, testDataApi.baseUrl, testDataApi.endpoint);
+
     });
 
     test.afterAll(async () => {
