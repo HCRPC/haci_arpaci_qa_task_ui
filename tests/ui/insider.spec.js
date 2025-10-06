@@ -15,6 +15,7 @@ test.describe("Insider Website Home Page Tests", () => {
   let qualityAssurancePage;
 
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
     homePage = new HomePage(page);
     careersPage = new CareersPage(page);
     qualityAssurancePage = new QualityAssurancePage(page);
@@ -27,14 +28,15 @@ test.describe("Insider Website Home Page Tests", () => {
   test("Verify Insider home page is opened", async ({ page }) => {
 
     //Check that Insider home page is opened
-      UIHelper.verifyUrl(page, testData.HOMEPAGE_URL);
+    await UIHelper.verifyUrl(page, testData.HOMEPAGE_URL);
+    await UIHelper.verifyPageTitle(page, testData.HOMEPAGE_TITLE);
   });
 
   test("Verify Careers page sections are visible", async ({ page }) => {
 
     await homePage.hoverCompanyMenu();
     await homePage.clickCareers();
-    UIHelper.verifyUrl(page, testData.CAREERS_PAGE_URL);
+    await UIHelper.verifyUrl(page, testData.CAREERS_PAGE_URL);
 
     //Check Career page, its Locations, Teams, and Life at Insider blocks are open
     const areBlocksVisible = await careersPage.checkBlocksVisibility();
@@ -49,11 +51,11 @@ test.describe("Insider Website QA Page Tests", () => {
   let qualityAssurancePage;
 
   test.beforeEach(async ({ page }) => {
-
+      await page.setViewportSize({ width: 1920, height: 1080 });
       qualityAssurancePage = new QualityAssurancePage(page);
       await page.goto(testData.QA_PAGE_URL);
       await qualityAssurancePage.acceptCookies();
-      UIHelper.verifyUrl(page, testData.QA_PAGE_URL);
+      await UIHelper.verifyUrl(page, testData.QA_PAGE_URL);
 
   });
 
@@ -72,7 +74,7 @@ test.describe("Insider Website QA Page Tests", () => {
     //Check that all jobs’ Position contains “Quality Assurance”, Department contains
     // “Quality Assurance”, and Location contains “Istanbul, Turkey”
     const jobs = await qualityAssurancePage.getJobDetails();
-    UIHelper.verifyJobListItems(jobs, "Quality Assurance", "Quality Assurance",
+    await UIHelper.verifyJobListItems(jobs, "Quality Assurance", "Quality Assurance",
         "Istanbul, Turkiye");
     });
 
@@ -91,6 +93,6 @@ test.describe("Insider Website QA Page Tests", () => {
 
     await newPage.waitForLoadState();
     //check that this action redirects us to the Lever Application form page
-    UIHelper.verifyUrlContains(newPage, testData.LEVER_APP_FORM_PAGE_URL);
+    await UIHelper.verifyUrlContains(newPage, testData.LEVER_APP_FORM_PAGE_URL);
   });
 });

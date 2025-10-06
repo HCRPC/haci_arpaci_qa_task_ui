@@ -30,7 +30,10 @@ class UIVerifications {
             expect(job.location).toContain(expectedLocation);
         });
     }
+
+    static async verifyPageTitle(page, expectedTitle) {
+        await expect(page).toHaveTitle(expectedTitle);
+    }
 }
 
 module.exports = UIVerifications;
-
