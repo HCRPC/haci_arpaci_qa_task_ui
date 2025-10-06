@@ -8,7 +8,7 @@ module.exports = defineConfig({
   workers: 2, // UI testleri için 2 worker
   reporter: 'html',
   use: {
-    headless: false,
+    headless: true,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     timeout: 120000,
