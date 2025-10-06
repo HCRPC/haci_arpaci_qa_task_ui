@@ -64,7 +64,7 @@ test.describe("Insider Website QA Page Tests", () => {
     await qualityAssurancePage.clickSeeAllQaJobs();
     await qualityAssurancePage.filterByLocation("Istanbul, Turkiye");
     await qualityAssurancePage.filterByDepartment("Quality Assurance");
-    await page.waitForTimeout(5000);
+    await UIHelper.waitToListingsLoads(page, "location=Istanbul%2C%20Turkiye","Istanbul, Turkiye","Quality Assurance");
 
     const jobListCount = await qualityAssurancePage.getJobListCount();
 
