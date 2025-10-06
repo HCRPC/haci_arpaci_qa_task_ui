@@ -1,4 +1,4 @@
-# Insider QA Task UI & API Automation Project
+# Hacı Arpaci - QA Task UI % API - Playwright/JavaScript
 
 ## Overview
 This project contains automated UI and API tests for the QA Task using Playwright/JavaScript. 
