@@ -28,8 +28,10 @@ test.describe("Insider Website Home Page Tests", () => {
   test("Verify Insider home page is opened", async ({ page }) => {
 
     //Check that Insider home page is opened
-    await UIHelper.verifyUrl(page, testData.HOMEPAGE_URL);
-    await UIHelper.verifyPageTitle(page, testData.HOMEPAGE_TITLE);
+    await test.step("Verify Insider home page is opened", async () => {
+      await UIHelper.verifyUrl(page, testData.HOMEPAGE_URL);
+      await UIHelper.verifyPageTitle(page, testData.HOMEPAGE_TITLE);
+    });
   });
 
   test("Verify Careers page sections are visible", async ({ page }) => {
@@ -39,9 +41,10 @@ test.describe("Insider Website Home Page Tests", () => {
     await UIHelper.verifyUrl(page, testData.CAREERS_PAGE_URL);
 
     //Check Career page, its Locations, Teams, and Life at Insider blocks are open
-    const areBlocksVisible = await careersPage.checkBlocksVisibility();
-    expect(areBlocksVisible).toBeTruthy();
-
+    await test.step("Verify Career page widgets are loaded ", async () => {
+      const areBlocksVisible = await careersPage.checkBlocksVisibility();
+      expect(areBlocksVisible).toBeTruthy();
+      });
   });
 });
 
@@ -62,28 +65,37 @@ test.describe("Insider Website QA Page Tests", () => {
   test("Filter QA jobs and Verify filtered jobs details", async ({ page }) => {
 
     await qualityAssurancePage.clickSeeAllQaJobs();
-    await qualityAssurancePage.filterByLocation("Istanbul, Turkiye");
-    await qualityAssurancePage.filterByDepartment("Quality Assurance");
-    await UIHelper.waitToListingsLoads(page, "location=Istanbul%2C%20Turkiye","Istanbul, Turkiye","Quality Assurance");
 
-    const jobListCount = await qualityAssurancePage.getJobListCount();
+    await test.step("Filter QA job and location", async () => {
+      await qualityAssurancePage.filterByLocation(testData.QA_LOCATION);
+      await qualityAssurancePage.filterByDepartment(testData.QA_DEPARTMENT);
+    });
+    await test.step("Wait for job listings to load", async () => {
+      await UIHelper.waitToListingsLoads(page, testData.QA_JOB_URL, testData.QA_LOCATION, testData.QA_POSITION);
+    });
 
-    // Check the presence of the job list
-    UIHelper.verifyCountGreaterThan(jobListCount, 0)
+    await test.step("Verify search job exists", async () => {
+      const jobListCount = await qualityAssurancePage.getJobListCount();
+      // Check the presence of the job list
+      UIHelper.verifyJobCountGreaterThan(jobListCount, 0)
+    });
 
     //Check that all jobs’ Position contains “Quality Assurance”, Department contains
     // “Quality Assurance”, and Location contains “Istanbul, Turkey”
     const jobs = await qualityAssurancePage.getJobDetails();
-    await UIHelper.verifyJobListItems(jobs, "Quality Assurance", "Quality Assurance",
-        "Istanbul, Turkiye");
+    await test.step("Verify filtered jobs details", async () => {
+      await UIHelper.verifyJobListItems(jobs, testData.QA_POSITION, testData.QA_DEPARTMENT, testData.QA_LOCATION);
+      });
     });
 
 
-  test("Verify redirection to Lever Application form", async ({ page }) => {
+  test.only("Verify redirection to Lever Application form", async ({ page }) => {
 
     await qualityAssurancePage.clickSeeAllQaJobs();
-    await qualityAssurancePage.filterByLocation("Istanbul, Turkiye");
-    await qualityAssurancePage.filterByDepartment("Quality Assurance");
+    await test.step("Filter QA job and location", async () => {
+      await qualityAssurancePage.filterByLocation(testData.QA_LOCATION);
+      await qualityAssurancePage.filterByDepartment(testData.QA_DEPARTMENT);
+      });
 
     const [newPage] = await Promise.all([
       page.waitForEvent("popup"),
@@ -93,6 +105,8 @@ test.describe("Insider Website QA Page Tests", () => {
 
     await newPage.waitForLoadState();
     //check that this action redirects us to the Lever Application form page
-    await UIHelper.verifyUrlContains(newPage, testData.LEVER_APP_FORM_PAGE_URL);
+    await test.step("Verify redirection to Lever Application form", async () => {
+      await UIHelper.verifyUrlContains(newPage, testData.LEVER_APP_FORM_PAGE_URL);
+    });
   });
 });

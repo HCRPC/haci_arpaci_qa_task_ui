@@ -19,7 +19,7 @@ class UIVerifications {
         await expect(element).toContainText(expectedText);
     }
 
-    static verifyCountGreaterThan(count, min) {
+    static verifyJobCountGreaterThan(count, min) {
         expect(count).toBeGreaterThan(min);
     }
 
