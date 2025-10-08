@@ -88,6 +88,6 @@ test.describe('PetStore API - CRUD for /pet endpoint', () => {
 
         const res = await petApi.deletePet(petId);
         // Petstore sometimes returns status code 200 with empty body, handle both
-        await ApiHelper.verifyStatusCodes(res, [404, 200]);
+        await ApiHelper.verifyStatusCodes(res, [200, 404]);
     });
 });

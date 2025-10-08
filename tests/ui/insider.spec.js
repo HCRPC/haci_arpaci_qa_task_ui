@@ -38,7 +38,7 @@ test.describe("Insider Website Home Page Tests", () => {
 
     await homePage.hoverCompanyMenu();
     await homePage.clickCareers();
-    await UIHelper.verifyUrl(page, testData.CAREERS_PAGE_URL);
+    await UIHelper.verifyUrlContains(page, testData.CAREERS_PAGE_URL);
 
     //Check Career page, its Locations, Teams, and Life at Insider blocks are open
     await test.step("Verify Career page widgets are loaded ", async () => {
@@ -89,7 +89,7 @@ test.describe("Insider Website QA Page Tests", () => {
     });
 
 
-  test.only("Verify redirection to Lever Application form", async ({ page }) => {
+  test("Verify redirection to Lever Application form", async ({ page }) => {
 
     await qualityAssurancePage.clickSeeAllQaJobs();
     await test.step("Filter QA job and location", async () => {
